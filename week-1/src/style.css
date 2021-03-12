@@ -1,0 +1,56 @@
+.App{
+    width: 100vw;
+    min-height: 100vh;
+    padding: 32px;
+    box-sizing: border-box;
+}
+
+.container{
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+.outter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    max-width: 400px;
+    width: 100vw;
+    height: 100vh;
+    border: 1px solid #eee;
+    overflow: hidden;
+    padding: 0px 16px;
+    box-sizing: border-box;
+}
+
+.outter h1 {
+    text-align: center;
+    font-size: 1.5em;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.scc-img {
+    width: 80%;
+    margin: 16px;
+}
+
+.text-box {
+    padding: 10px;
+    margin: 24px 0px;
+    border: 1px solid #DADAFC;
+    border-radius: 30px;
+    width: 100%;
+}
+
+.button {
+    padding: 8px 24px;
+    background-color: #dadafc;
+    border-radius: 30px;
+    border: #dadafc;
+}
