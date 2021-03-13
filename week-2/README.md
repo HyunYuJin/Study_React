@@ -1,70 +1,41 @@
-# Getting Started with Create React App
+### 라이프사이클
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+컴포넌트의 생명주기를 가리키는 것으로 **컴포넌트가 렌더링을 준비하는 순간부터, 페이지에서 사라질 때까지**를 의미한다.
 
-## Available Scripts
+- 컴포넌트는 생성되고 → 수정(업데이트)되고 → 사라진다.
+    - 생성: 처음으로 컴포넌트를 불러오는 단계
+    - 수정(업데이트): 사용자의 행동(클릭, 데이터 입력 등)으로 데이터가 바뀌거나 부모 컴포넌트가 렌더링할 때 업데이트가 된다.
+        - props가 바뀔 때
+        - state가 바뀔 때
+        - 부모 컴포넌트가 업데이트 되었을 때 (= 리렌더링)
+        - 강제로 업데이트 했을 경우 (forceUpdate()를 통해 강제로 컴포넌트를 업데이트 할 수 있다.)
+    - 제거: 페이지를 이동하거나, 사용자의 행동(삭제 버튼)으로 인해 컴포넌트가 화면에서 사라지는 단계
 
-In the project directory, you can run:
+### constructor()
 
-### `yarn start`
+- 클래스형 컴포넌트의 초기 설정을 만져준다.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### render()
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- 컴포넌트 모양을 정의하는 곳
+- state, props에 접근해서 데이터를 보여줄 수 있다.
+- 하지만 이들을 건드려 데이터를 수정해서는 안된다.
 
-### `yarn test`
+### componentDidMount()
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Mount가 완료된 직후 실행되는 라이프사이클 함수
+- 이 함수는 첫번째 렌더링을 마친 후 딱 한번만 실행된다.
+- 리렌더링이 될 때는 실행되지 않는다.
+- 이 단계에서는 ajax 요청, 이벤트 등록, 함수 호출 등 작업을 처리한다.
+- 이미 가상 DOM이 실제 DOM으로 올라간 후다. (DOM 관련 처리를 해도 된다.)
 
-### `yarn build`
+### componentDidUpdate(prevProps, prevState, snapshot)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- 리렌더링이 완료된 후 실행되는 함수다.
+- 중요한 파라미터인 prevProps와 prevState는 각각 업데이트 되기 전의 props와 state다.
+- 이전 데이터와 비교할 일이 있을 때 해당 함수에서 비교해줄 수 있다.
+- 이 또한, 가상 DOM이 실제 DOM으로 올라간 후니까 DOM 관련 처리를 해도 된다.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### componentWillUnmount()
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- 쓸데없는 이벤트가 중첩되어 있지 않도록 제거해주어야 한다.
