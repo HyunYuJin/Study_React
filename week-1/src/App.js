@@ -4,7 +4,7 @@ import BucketList from './BucketList';
 // import './style.css';
 import './scss_ex.scss';
 
-// 클래스형 컴포넌트는 이렇게 생겼습니다!
+// 클래스형 컴포넌트
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -26,8 +26,6 @@ class App extends React.Component {
         <div className="container">
             <h1 className="title">내 버킷리스트</h1>
             <hr className="line"/>
-            {/* 컴포넌트를 넣어줍니다. */}
-            {/* <컴포넌트 명 [props 명]={넘겨줄 것(리스트, 문자열, 숫자, ...)}/> */}
             <BucketList list={this.state.list} />
         </div>
       </div>
