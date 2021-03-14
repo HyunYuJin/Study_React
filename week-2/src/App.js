@@ -1,6 +1,7 @@
 import React from 'react';
 import LifecycleEx from './LifeCycle';
 import PracticeRef from './PracticeRef';
+import Square from './Square';
 
 class App extends React.Component {
   constructor(props) {
@@ -13,7 +14,7 @@ class App extends React.Component {
 
   addSquare = () => {
     this.setState({ count: this.state.count + 1 });
-    console.log("Add Square!");
+    console.log("[Class] Add Square!");
   }
 
   removeSquare = () => {
@@ -22,7 +23,7 @@ class App extends React.Component {
     } else {
       window.alert("No Square! :(");
     }
-    console.log("Remove Square!");
+    console.log("[Class] Remove Square!");
   }
 
   render () {
@@ -44,7 +45,7 @@ class App extends React.Component {
         <hr />
   
         <div className="square">
-          <h3>State 관리</h3>
+          <h3>Class 방식 State 관리</h3>
           {square_count.map((val, idx) => {
             return (
                 <div 
@@ -59,8 +60,11 @@ class App extends React.Component {
             )
           })}
           <button onClick={this.addSquare}>Add Square</button>
-          <button onClick={this.removeSquare}>Minus Square</button>
+          <button onClick={this.removeSquare}>Remove Square</button>
         </div>
+
+        {/* 함수형 */}
+        <Square />
       </div>
     );
   }
