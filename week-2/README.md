@@ -65,3 +65,35 @@ this.setState({ count: this.state.count + 1 });
 ```jsx
 const [count, setCount] = React.useState(초기값);
 ```
+
+
+## 이벤트리스너
+
+1. Ref를 이용해서 이벤트를 등록할 요소를 가져온다.
+2. 이벤트 동작이 일어날 함수를 선언해주고 동작을 정의한다.
+3. DOM이 생성되고나서 이벤트를 등록해준다. 
+
+    DOM이 생성되고 나서이기 때문에 componentDidMount()에서 이 작업을 진행한다.
+
+4. 컴포넌트가 사라질 때 쓸데없는 이벤트리스너가 남아있는 것을 방지하기 위해서 구독을 해제해준다.
+
+    컴포넌트가 사라질 때이기 때문에 componentWillUnmount()에서 이 작업을 진행한다.
+
+```jsx
+hoverEvent = (e) => {
+  console.log(e);
+  console.log(e.target);
+
+  e.target.style.backgroundColor = "pink";
+}
+
+  // 등록을해주면
+  componentDidMount() {
+    this.div.current.addEventListener('mouseover', this.hoverEvent);
+  }
+
+  // 해제도 해주어야한다.
+  componentWillUnmount() {
+    this.div.current.removeEventListener('mouseover', this.hover);
+  }
+```
