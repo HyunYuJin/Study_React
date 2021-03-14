@@ -10,6 +10,8 @@ class App extends React.Component {
     this.state = {
       count: 3 // 초기 사각형을 만들어줄 수
     };
+
+    this.div = React.createRef();
   }
 
   addSquare = () => {
@@ -24,6 +26,23 @@ class App extends React.Component {
       window.alert("No Square! :(");
     }
     console.log("[Class] Remove Square!");
+  }
+
+  hoverEvent = (e) => {
+    console.log(e);
+    console.log(e.target);
+
+    e.target.style.backgroundColor = "pink";
+  }
+
+  // 등록을해주면
+  componentDidMount() {
+    this.div.current.addEventListener('mouseover', this.hoverEvent);
+  }
+
+  // 해제도 해주어야한다.
+  componentWillUnmount() {
+    this.div.current.removeEventListener('mouseover', this.hover);
   }
 
   render () {
@@ -65,6 +84,20 @@ class App extends React.Component {
 
         {/* 함수형 */}
         <Square />
+        <hr />
+
+        <div className="EventListener">
+          <h3>이벤트 리스너</h3>
+          <div 
+            ref={this.div}
+            style={{
+              width: "150px",
+              height: "150px",
+              backgroundColor: "#EEE",
+              padding: "10px",
+              margin: "10px"
+            }}>이벤트리스너!!</div>
+        </div>
       </div>
     );
   }
