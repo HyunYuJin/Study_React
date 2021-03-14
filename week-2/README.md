@@ -1,4 +1,4 @@
-### 라이프사이클
+## 라이프사이클
 
 컴포넌트의 생명주기를 가리키는 것으로 **컴포넌트가 렌더링을 준비하는 순간부터, 페이지에서 사라질 때까지**를 의미한다.
 
@@ -39,3 +39,29 @@
 ### componentWillUnmount()
 
 - 쓸데없는 이벤트가 중첩되어 있지 않도록 제거해주어야 한다.
+
+
+## State
+
+### 클래스형 컴포넌트에서
+
+setState()를 사용해서 state를 관리할 수 있다.
+
+- 딕셔너리형태로 작성해준다.
+
+```jsx
+this.setState({ count: this.state.count + 1 });
+```
+
+### 함수형 컴포넌트에서
+
+원래 함수형 컴포넌트에는 state가 없었다. 하지만 React Hooks가 등장하면서 state를 사용할 수 있게되었다.
+
+다음처럼 useState()를 사용함에 따라서 사용할 수 있게되었다.
+
+- count에는 state 값이 들어간다.
+- setCount는 count라는 state를 변경하기 위한 함수로 사용
+
+```jsx
+const [count, setCount] = React.useState(초기값);
+```
