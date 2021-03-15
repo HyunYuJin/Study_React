@@ -4,6 +4,9 @@ import BucketList from './BucketList';
 // import './style.css';
 import './scss_ex.scss';
 import styled from "styled-components";
+import { withRouter } from "react-router";
+import { Route } from "react-router-dom";
+import Detail from './Detail';
 
 // 클래스형 컴포넌트
 class App extends React.Component {
@@ -17,6 +20,10 @@ class App extends React.Component {
     };
 
     this.text = React.createRef();
+  }
+
+  componentDidMount() {
+    console.log(this.text);
   }
 
   addList = () => {
@@ -38,7 +45,9 @@ class App extends React.Component {
         <Container>
           <Title >내 버킷리스트</Title>
           <Line/>
-          <BucketList list={this.state.list} />
+          {/* props를 넘겨줄 때 render를 쓴다. */}
+          <Route exact path="/" render={(props) => <BucketList list={this.state.list} history={this.props.history} />} />
+          <Route path="/detail" component={Detail} />
         </Container>
         <Add>
           <input type="text" ref={this.text} />
@@ -79,4 +88,4 @@ const Add = styled.div`
   border: 1px solid #ddd;
 `
 
-export default App;
+export default withRouter(App);

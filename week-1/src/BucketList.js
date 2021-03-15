@@ -2,13 +2,16 @@ import React from "react";
 import styled from "styled-components";
 
 const BucketList = (props) => {
+  console.log(props);
   const my_lists = props.list;
 
   return (
     <ListStyle>
       {my_lists.map((list, index) => {
         return (
-          <ItemStyle key={index}>
+          <ItemStyle key={index} onClick={(() => {
+            props.history.push('/detail');
+          })}>
             { list }
           </ItemStyle>
         );
