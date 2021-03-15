@@ -95,3 +95,35 @@ props.match 안에 params라는 값이 들어온다.
     	this.props.history.goBack();
     })}>뒤로가기</button>
     ```
+
+
+## 중복된 주소 처리하기
+
+exact를 이용하면 된다.
+
+```jsx
+<Route exact path="/" />
+```
+
+## 잘못된 주소 처리하기
+
+Switch를 이용하면 아주 쉽게 처리가 가능하다.
+
+react-router-dom에서 Switch를 불러온다.
+
+```jsx
+import { Route, Switch } from "react-router-dom";
+```
+
+Route부분 전체를 Switch로 감싸준다.
+
+그리고 그냥 NotFound 컴포넌트를 Route에 주소 없이 연결하면 된다.
+
+```jsx
+<Switch>
+	<Route path="/" exact render={(props) => (
+		<BucketList list={this.state.list} history={this.props.history} /> )} />
+  <Route path="/detail" component={Detail} />
+	<Route component={NotFound} />
+</Switch>
+```
