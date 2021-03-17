@@ -1,13 +1,33 @@
 import React from 'react';
 import BucketList from './BucketList';
-// import Start from './Start';
-// import './style.css';
 import './scss_ex.scss';
 import styled from "styled-components";
 import { withRouter } from "react-router";
 import { Route, Switch } from "react-router-dom";
 import Detail from './Detail';
 import NotFound from './NotFound';
+import { connect } from 'react-redux'; // Component와 Redux를 연결해주기 위해 사용
+import { loadBucket, createBucket } from './redux/modules/bucket';
+
+// Redux에 있는 state를 해당 component에 props 형태로 넘겨주는 역할
+const mapStateToProps = (state) => {
+  return { bucket_list: state.bucket.list };
+}
+
+// action이 생기는 것을 감시하고 dispatch를 넘겨주는 역할
+const mapDispatchToProps = (dispatch) => {
+  // ActionCreate 함수
+  // Action을 반환해야 Reducer에서 처리할 수 있다!
+  return {
+    load: () => {
+      dispatch(loadBucket());
+    },
+
+    create: (bucket) => { // Redux store에 추가해준다.
+      dispatch(createBucket(bucket));
+    }
+  }
+}
 
 // 클래스형 컴포넌트
 class App extends React.Component {
@@ -16,46 +36,37 @@ class App extends React.Component {
     
     // App 컴포넌트의 state를 정의한다.
     this.state = {
-      name: "미더덕",
-      list: ['자가용 장만하기', '스카이 다이빙', '인생 최종목표 알지?']
+      name: "미더덕"
     };
 
     this.text = React.createRef();
   }
 
   componentDidMount() {
-    console.log(this.text);
+    console.log(this.props);
   }
 
-  addList = () => {
-    let list = this.state.list;
-    const add = this.text.current.value;
-
-    // 기존의 배열은 유지한 채로 새로운 배열을 만들어줌 -> 불변성 관리 또는 유지
-    if (add !== '') this.setState({ list: [...list, add] });
-    console.log("Add List");
-  }
+  addBucketList = () => {
+    const new_item = this.text.current.value;
+    this.props.create(new_item);
+  };
 
   render() {
     return (
-      // <div className="App">
-      //   <Start name={this.state.name} />
-      // </div>
-
       <div className="App">
         <Container>
           <Title >내 버킷리스트</Title>
           <Line/>
           {/* props를 넘겨줄 때 render를 쓴다. */}
           <Switch>
-            <Route exact path="/" render={(props) => <BucketList list={this.state.list} history={this.props.history} />} />
+            <Route exact path="/" render={(props) => <BucketList list={this.props.bucket_list} history={this.props.history} />} />
             <Route path="/detail" component={Detail} />
             <Route render={(props) => <NotFound history={this.props.history} />} />
           </Switch>
         </Container>
         <Add>
           <input type="text" ref={this.text} />
-          <button onClick={this.addList}>버킷리스트 추가하기</button>
+          <button onClick={this.addBucketList}>버킷리스트 추가하기</button>
         </Add>
       </div>
     )
@@ -92,4 +103,5 @@ const Add = styled.div`
   border: 1px solid #ddd;
 `
 
-export default withRouter(App);
+// connect로 component와 store를 엮어준다.
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(App));
