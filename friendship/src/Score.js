@@ -1,20 +1,38 @@
 import React from 'react';
 import styled from 'styled-components';
 
+// Redux Hook
+import { useSelector } from 'react-redux';
+
 const Score = (props) => {
+    console.log("Score: ", props);
+    const name = useSelector((state) => state.quiz.name);
+    const score_texts = useSelector((state) => state.quiz.score_texts);
+    const quiz_answer = useSelector((state) => state.quiz.answers);
+    
+    console.log(score_texts, quiz_answer);
+
+    // True는 정답. 정답만 골라내기
+    let correct = quiz_answer.filter((answer) => {
+        return answer;
+    });
+    let score = (correct.length / quiz_answer.length) * 100;
+
     return (
         <ScoreContainer>
             <Text>
-                <span>{props.name}</span> 퀴즈에 <br />
+                <span>{name}</span> 퀴즈에 <br />
                 대한 내 점수는?
             </Text>
 
             <MyScore>
-                <span>100</span>점
-                <p>{props.scoreMsg}</p>
+                <span>{score}</span>점
+                <p>{score_texts[score]}</p>
             </MyScore>
 
-            <Button>랭킹보기</Button>
+            <Button onClick={(() => {
+                props.history.push('/message');
+            })}>{name}에게 한마디</Button>
         </ScoreContainer>
     );
 }

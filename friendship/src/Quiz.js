@@ -4,20 +4,42 @@ import styled from 'styled-components';
 // import TinderCard from 'react-tinder-card';
 import SwipeItem from './SwipeItem';
 
+import Score from './Score';
+
+// Redux Hook
+import { useSelector, useDispatch } from 'react-redux';
+import { addAnswer } from './redux/modules/quiz';
+
 const Quiz = (props) => {
-    const [num, setNum] = React.useState(0);
+    console.log('Quiz Props:', props);
+    const quiz_list = useSelector((state) => state.quiz.quiz);
+    const answers = useSelector((state) => state.quiz.answers);
+    const dispatch = useDispatch();
+
+    const num = answers.length;
+
+    console.log('answers: ', answers);
 
     const onSwipe = (direction) => {
-        console.log("You swiped: " + direction);
-        setNum(num + 1);
+        let _answer = direction === 'left' ?  "O" : "X";
+
+        if (_answer === quiz_list[num].answer) {
+            dispatch(addAnswer(true));
+        } else {
+            dispatch(addAnswer(false));
+        }
     };
+
+    if (num > quiz_list.length - 1) {
+        return <Score {...props} />
+    }
 
     return (
         <QuizContainer>
             <p>
                 <span>{num + 1}번 문제</span>
             </p>
-            {props.list.map((value, index) => {
+            {quiz_list.map((value, index) => {
                 if (num === index) {
                     return (
                         <Question key={index}>{value.question}</Question>
@@ -30,7 +52,7 @@ const Quiz = (props) => {
                 <Answer>x</Answer>
             </AnswerZone>
 
-            {props.list.map((value, index) => {
+            {quiz_list.map((value, index) => {
                 if (num === index) {
                     return (
                         // <DragItem key={index}>
