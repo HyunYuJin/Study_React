@@ -2,7 +2,7 @@ import React from "react";
 // BucketList 컴포넌트를 import 해옵니다.
 // import [컴포넌트 명] from [컴포넌트가 있는 파일경로];
 import BucketList from "./BucketList";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 class App extends React.Component {
   constructor(props) {
@@ -23,6 +23,7 @@ class App extends React.Component {
           {/* 컴포넌트를 넣어줍니다. */}
           {/* <컴포넌트 명 [props 명]={넘겨줄 것(리스트, 문자열, 숫자, ...)}/> */}
           <BucketList list={this.state.list} />
+          <Box></Box>
         </Container>
       </div>
     );
@@ -47,6 +48,46 @@ const Title = styled.h1`
 const Line = styled.hr`
   margin: 16px 0px;
   border: 1px dotted #ddd;
+`;
+
+// Keyframes
+const move = keyframes`
+  0% {
+    top: 20px;
+    opactity: 1;
+    background-color: green;
+  }
+
+  30% {
+    top: 50px;
+    background-color: orange;
+  }
+
+  50% {
+    top: 200px;
+    opacity: 0;
+  }
+
+  70% {
+    top: 150px;
+  }
+
+  100% {
+    top: 20px;
+    opacity: 1;
+    background-color: blue;
+  }
+`;
+
+const Box = styled.div`
+  width: 300px;
+  height: 300px;
+  background-color: green;
+  border-radius: 150px;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  animation: ${move} 2s 1s infinite;
 `;
 
 export default App;
