@@ -6,6 +6,7 @@ import { withRouter } from "react-router";
 import { Route, Switch } from "react-router-dom";
 import Detail from './Detail';
 import NotFound from './NotFound';
+import Progress from './Progress';
 import { connect } from 'react-redux'; // Component와 Redux를 연결해주기 위해 사용
 import { loadBucket, createBucket } from './redux/modules/bucket';
 
@@ -58,6 +59,7 @@ class App extends React.Component {
       <div className="App">
         <Container>
           <Title >내 버킷리스트</Title>
+          <Progress />
           <Line/>
           {/* props를 넘겨줄 때 render를 쓴다. */}
           <Switch>
