@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 // Action Crators 불러오기
 import { deleteBucket, updateBucket } from './redux/modules/bucket';
@@ -12,7 +13,7 @@ const Detail = (props) => {
     console.log(bucket_list, props);
 
     return (
-        <div>
+        <DetailContainer>
             <h1>{bucket_list[bucket_index].text}</h1>
             <button onClick={() => {
                 dispatch(deleteBucket(bucket_index));
@@ -22,8 +23,24 @@ const Detail = (props) => {
                 dispatch(updateBucket(bucket_index));
                 props.history.goBack();
             }}>완료하기</button>
-        </div>
+        </DetailContainer>
     );
 }
+
+const DetailContainer = styled.div`
+    height: 100%;
+
+    & > * {
+        padding: 5px;
+    }
+    & button {
+        width: 50%;
+        color: #fff;
+        border: 1px solid #996699;
+        background-color: #996699;
+        border: 1px solid #FFF;
+        box-sizing: border-box;
+    }
+`;
 
 export default Detail;

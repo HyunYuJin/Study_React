@@ -70,8 +70,11 @@ class App extends React.Component {
         </Container>
         <Add>
           <input type="text" ref={this.text} />
-          <button onClick={this.addBucketList}>버킷리스트 추가하기</button>
+          <button onClick={this.addBucketList}>추가하기</button>
         </Add>
+        <button onClick={() => {
+          window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+        }}>위로가기</button>
       </div>
     )
   }
@@ -88,7 +91,7 @@ const Container = styled.div`
 `;
 
 const Title = styled.h1`
-  color: slateblue;
+  color: #996699;
   text-align: center;
 `;
 
@@ -105,7 +108,33 @@ const Add = styled.div`
   margin: 20px auto;
   border-radius: 5px;
   border: 1px solid #ddd;
-`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  & > * {
+    padding: 5px;
+  }
+
+  & input {
+    border-radius: 5px;
+    margin-right: 10px;
+    border: 1px solid #888;
+    width: 70%;
+
+    &:focus {
+      outline: none;
+      border: 1px solid #996699;
+    }
+  }
+
+  & button {
+    width: 25%;
+    color: #fff;
+    border: 1px solid #996699;
+    background-color: #996699;
+  }
+`;
 
 // connect로 component와 store를 엮어준다.
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(App));

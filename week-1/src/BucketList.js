@@ -11,7 +11,7 @@ const BucketList = (props) => {
     <ListStyle>
       {bucket_list.map((list, index) => {
         return (
-          <ItemStyle key={index} color={list.completed ? "orange" : "aliceblue" } onClick={(() => {
+          <ItemStyle key={index} color={list.completed ? "#FFF" : "#000"} bgColor={list.completed ? "#996699" : "#eee" } onClick={(() => {
             props.history.push('/detail/' + index);
           })}>
             { list.text }
@@ -26,6 +26,7 @@ const ListStyle = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
+  max-height: 50vh;
   overflow-x: hidden;
   overflow-y: auto;
 `;
@@ -33,7 +34,9 @@ const ListStyle = styled.div`
 const ItemStyle = styled.div`
   padding: 16px;
   margin: 8px;
-  background-color: ${(props => props.color)};
+  color: ${(props => props.color)};
+  background-color: ${(props => props.bgColor)};
+  font-weight: 800;
 `;
 
 export default BucketList;
