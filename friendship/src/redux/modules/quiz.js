@@ -46,8 +46,7 @@ export default function reducer(state = initialState, action = {}) {
         }
 
         case "quiz/ADD_ANSWER": {
-            const new_quiz_list = [...state.answers, action.answer];
-            return { ...state, answers: new_quiz_list };
+            return { ...state, answers: [...state.answers, action.answer] };
         }
 
         case "quiz/RESET_ANSWER": {

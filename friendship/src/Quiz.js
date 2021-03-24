@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 // import img from './assets/scc_img01.png';
 // import TinderCard from 'react-tinder-card';
+import ProgressBar from './Progress';
 import SwipeItem from './SwipeItem';
 
 import Score from './Score';
@@ -11,14 +12,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addAnswer } from './redux/modules/quiz';
 
 const Quiz = (props) => {
-    console.log('Quiz Props:', props);
-    const quiz_list = useSelector((state) => state.quiz.quiz);
-    const answers = useSelector((state) => state.quiz.answers);
     const dispatch = useDispatch();
-
+    const answers = useSelector((state) => state.quiz.answers);
+    const quiz_list = useSelector((state) => state.quiz.quiz);
     const num = answers.length;
-
-    console.log('answers: ', answers);
 
     const onSwipe = (direction) => {
         let _answer = direction === 'left' ?  "O" : "X";
@@ -36,6 +33,7 @@ const Quiz = (props) => {
 
     return (
         <QuizContainer>
+            <ProgressBar />
             <p>
                 <span>{num + 1}번 문제</span>
             </p>
@@ -52,16 +50,9 @@ const Quiz = (props) => {
                 <Answer>x</Answer>
             </AnswerZone>
 
-            {quiz_list.map((value, index) => {
-                if (num === index) {
-                    return (
-                        // <DragItem key={index}>
-                        //     <TinderCard onSwipe={onSwipe}>
-                        //         <img src={img} alt="미더덕" />
-                        //     </TinderCard>
-                        // </DragItem>
-                        <SwipeItem key={index} onSwipe={onSwipe} />
-                    );
+            {quiz_list.map((value, idx) => {
+                if (idx === num) {
+                return <SwipeItem key={idx} onSwipe={onSwipe}/>;
                 }
             })}
         </QuizContainer>

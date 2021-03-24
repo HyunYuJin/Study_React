@@ -7,20 +7,18 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addRank } from './redux/modules/rank';
 
 const Message = (props) => {
-    console.log('Message: ', props);
+    const dispatch = useDispatch();
     const name = useSelector((state) => state.quiz.name);
-    const user_name = useSelector((state) => state.rank.user_name);
     const answers = useSelector((state) => state.quiz.answers);
+    const user_name = useSelector((state)=>state.rank.user_name);
     const input_text = React.useRef(null);
 
     let correct = answers.filter((answer) => {
         return answer;
-      });
+    });
     
     // 점수 계산하기
     let score = (correct.length / answers.length) * 100;
-
-    const dispatch = useDispatch();
 
     return (
         <MsgContainer>
@@ -28,16 +26,25 @@ const Message = (props) => {
                 <Profile src={img} alt="프로필" />
                 <h1><span>{name}</span>에게 남기는 한마디</h1>
                 <Textarea placeholder="한 마디 적기" ref={input_text}></Textarea>
-                <Button onClick={(() => {
+                <button onClick={() => {
                     let rank_info = {
-                        name: user_name,
                         score: parseInt(score),
+                        name: user_name,
                         message: input_text.current.value,
-                        current: true
+                        current: true,
                     };
+                    // 랭킹 정보 넣기
                     dispatch(addRank(rank_info));
+                    // 주소 이동
                     props.history.push('/ranking');
-                })}>남기고 랭킹 보러가기</Button>
+                }}
+                style={{
+                    padding: "8px 24px",
+                    backgroundColor: "#f1c32a",
+                    borderRadius: "30px",
+                    border: "#f1c32a",
+                }}
+                >한마디하고 랭킹 보러 가기</button>
             </Outter>
         </MsgContainer>
     )
@@ -91,14 +98,6 @@ const Textarea = styled.textarea`
     border-radius: 10px;
     width: 100%;
     height: 50px;
-`;
-
-const Button = styled.button`
-    padding: 8px 24px;
-    background-color: #f1c32a;
-    border-radius: 30px;
-    border: #f1c32a;
-    font-weight: bold;
 `;
 
 export default Message;

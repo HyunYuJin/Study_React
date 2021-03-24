@@ -5,13 +5,10 @@ import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 
 const Score = (props) => {
-    console.log("Score: ", props);
     const name = useSelector((state) => state.quiz.name);
     const score_texts = useSelector((state) => state.quiz.score_texts);
     const quiz_answer = useSelector((state) => state.quiz.answers);
     
-    console.log(score_texts, quiz_answer);
-
     // True는 정답. 정답만 골라내기
     let correct = quiz_answer.filter((answer) => {
         return answer;
@@ -37,7 +34,7 @@ const Score = (props) => {
 
             <MyScore>
                 <span>{score}</span>점
-                <p>{score_texts[score]}</p>
+                <p>{score_text}</p>
             </MyScore>
 
             <Button onClick={(() => {

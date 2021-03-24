@@ -17,9 +17,9 @@ import { connect } from 'react-redux';
 // firebase
 import { firestore } from './firebase';
 
-const mapStateToProps = (state) => {
-  return { ...state };
-}
+const mapStateToProps = (state) => ({
+  ...state,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   load: () => {}

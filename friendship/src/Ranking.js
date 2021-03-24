@@ -6,13 +6,28 @@ import { useSelector, useDispatch } from "react-redux";
 import { resetAnswer } from "./redux/modules/quiz";
 
 const Ranking = (props) => {
-    console.log('Ranking: ', props);
     const dispatch = useDispatch();
     const _ranking = useSelector((state) => state.rank.ranking);
-    const ranking = _ranking.sort((a, b) => { // 높은 점수 순서대로
+
+    React.useEffect(() => {
+        // current 가 없을 때는 바로 리턴
+        if (!user_rank.current) {
+          return;
+        }
+        // offsetTop 속성을 이용해 스크롤 이동
+        window.scrollTo({
+          top: user_rank.current.offsetTop,
+          left: 0,
+          behavior: "smooth",
+        });
+      }, []);
+    
+    // 스크롤 이동할 div 위치
+    const user_rank = React.useRef(null);
+
+    const ranking = _ranking.sort((a, b) => {
         return b.score - a.score;
     });
-    console.log(ranking);
 
     return (
         <RankContainer>
@@ -22,15 +37,17 @@ const Ranking = (props) => {
 
             <RankWrap>
                 {ranking.map((value, idx) => {
-                    return (
-                        <RankItem key={idx} highlight={value.current ? true : false}>
-                            <RankNum>{idx + 1}등</RankNum>
-                            <RankUser>
-                                <p>{value.name}</p>
-                                <p>{value.message}</p>
-                            </RankUser>
-                        </RankItem>
-                    );
+                    if (value) {
+                        return (
+                            <RankItem key={idx} highlight={value.current ? true : false} ref={user_rank}>
+                                <RankNum>{idx + 1}등</RankNum>
+                                <RankUser>
+                                    <p>{value.name}</p>
+                                    <p>{value.message}</p>
+                                </RankUser>
+                            </RankItem>
+                        );
+                    }
                 })}
             </RankWrap>
             <Button onClick={(() => {
@@ -98,6 +115,10 @@ const RankUser = styled.div`
     text-align: left;
 
     & > p{
+        &:first-child > b {
+            border-bottom: 2px solid #212121;
+        }
+
         margin: 0px 0px 8px 0px;
     }
 `;
