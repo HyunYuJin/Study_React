@@ -8,6 +8,7 @@ const GET_RANK = "rank/GET_RANK";
 
 const initialState = {
     user_name: "",
+    user_message: "",
     ranking: [
         { score: 40, name: "짱아찌", message: "안녕 미더덕!" },
     ],

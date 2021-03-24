@@ -14,6 +14,9 @@ import Ranking from './Ranking';
 // Redux
 import { connect } from 'react-redux';
 
+// firebase
+import { firestore } from './firebase';
+
 const mapStateToProps = (state) => {
   return { ...state };
 }
@@ -30,7 +33,19 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props);
+    // console.log(this.props);
+
+    const friend = firestore.collection("friend");
+
+    friend.get().then((docs) => {
+      let friend_list = [];
+      docs.forEach((doc) => {
+        if (doc.exists) {
+          friend_list = [...friend_list, { id: doc.id, ...doc.data() }];
+          console.log(friend_list);
+        }
+      });
+    });
   }
 
   render() {
