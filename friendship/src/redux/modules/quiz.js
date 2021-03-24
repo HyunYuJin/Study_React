@@ -41,16 +41,19 @@ export const resetAnswer = () => {
 // Reducer
 export default function reducer(state = initialState, action = {}) {
     switch (action.type) {
-        case "quiz/GET_QUIZ":
+        case "quiz/GET_QUIZ": {
             return { ...state, quiz: action.quiz_list };
+        }
 
-        case "quiz/ADD_ANSWER": 
+        case "quiz/ADD_ANSWER": {
             const new_quiz_list = [...state.answers, action.answer];
             return { ...state, answers: new_quiz_list };
-        
-        case "quiz/RESET_ANSWER":
-            return { ...state, answers: [] }; 
+        }
 
+        case "quiz/RESET_ANSWER": {
+            return { ...state, answers: [] }; 
+        }
+        
         default: 
             return state;
     }

@@ -17,6 +17,16 @@ const Score = (props) => {
         return answer;
     });
     let score = (correct.length / quiz_answer.length) * 100;
+    let score_text = ""; // 점수별로 띄워줄 텍스트
+
+    Object.keys(score_texts).map((s, idx) => {
+        // 첫번째 텍스트 넣어주기
+        if (idx === 0) {
+            score_text = score_texts[s];
+        }
+        // 실제 점수와 기준 점수(키로 넣었던 점수) 비교해서 텍스트를 넣자!
+        score_text = parseInt(s) <= score ? score_texts[s] : score_text;
+    });
 
     return (
         <ScoreContainer>
