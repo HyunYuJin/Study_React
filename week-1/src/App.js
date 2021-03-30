@@ -8,9 +8,7 @@ import Detail from './Detail';
 import NotFound from './NotFound';
 import Progress from './Progress';
 import { connect } from 'react-redux'; // Component와 Redux를 연결해주기 위해 사용
-import { loadBucket, createBucket } from './redux/modules/bucket';
-
-import { firestore } from './firebase';
+import { loadBucket, createBucket, loadBucketFB, addBucketFB } from './redux/modules/bucket';
 
 // Redux에 있는 state를 해당 component에 props로 받아오는 역할
 // Store가 가지고 있는 상태 값을 props로 받아오기 위한 함수
@@ -25,11 +23,11 @@ const mapDispatchToProps = (dispatch) => {
   // Action을 반환해야 Reducer에서 처리할 수 있다!
   return {
     load: () => {
-      dispatch(loadBucket());
+      dispatch(loadBucketFB());
     },
 
     create: (bucket) => { // Redux store에 추가해준다.
-      dispatch(createBucket(bucket));
+      dispatch(addBucketFB(bucket));
     }
   }
 }
@@ -48,48 +46,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    // firestore에 있는 데이터 불러오기 
-    // collection("이름")
-    // const bucket = firestore.collection("bucket");
-    // bucket.doc("bucket_item1").get().then((doc) => {
-    //   if (doc.exists) { // doc에 내용이 있는지 없는지 확인
-    //     console.log(doc.data()); // docuement 내용을 가지고 온다.
-    //     console.log(doc.id); // document의 id를 가지고온다.
-    //   }
-    //   console.log(doc.exists);
-    // });
-
-    // collection에 모든 데이터를 불러오기
-    // bucket.get().then((docs) => {
-    //   let bucket_data = [];
-    //   docs.forEach((doc) => {
-    //     if (doc.exists) {
-    //       bucket_data = [...bucket_data, { id: doc.id, ...doc.data() }];
-    //     }
-    //   });
-    // });
-
-    // 데이터 추가
-    // bucket.add({ text: "스카이 다이빙하기", completed: false });
-
-    // 데이터 수정
-    // 다른 필드는 건드리지 않고 특정 필드만 수정할 수 있다.
-    // bucket.doc("bucket_item1").update({ text: "애플워치 5사기" });
-
-    // 데이터 삭제하기
-    // collection의 id를 찾아서 delete
-    // bucket.doc("bucket_item2").delete().then((docRef) => {
-    //   console.log(docRef, "지웠다.");
-    // });
-
-    // 존재하지 않는 collection에 데이터 추가하기
-    // const bucket2 = firestore.collection("bucket2");
-    // bucket2.doc("bucket_item").set({
-    //   text: "자가용 장만하기",
-    //   completed: false
-    // });
-
-    console.log(firestore);
+    this.props.load();
   }
 
   addBucketList = () => {
