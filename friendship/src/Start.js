@@ -4,7 +4,9 @@ import img from './assets/scc_img01.png';
 // Redux Hook
 import { useSelector, useDispatch } from 'react-redux';
 // Redux
-import { addUserName } from './redux/modules/rank'; 
+import { addUserName } from './redux/modules/rank';
+
+// 기능을 개발한다!
 
 const Start = (props) => {
     // 이벤트가 발생할 곳에 ActionCreators 함수를 선언한다.
