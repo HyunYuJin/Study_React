@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import Button from '@material-ui/core/Button';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 import { useSelector, useDispatch } from 'react-redux';
 // Action Crators 불러오기
 import { deleteBucketFB, updateBucketFB } from './redux/modules/bucket';
@@ -15,14 +17,16 @@ const Detail = (props) => {
     return (
         <DetailContainer>
             <h1>{bucket_list[bucket_index].text}</h1>
-            <button onClick={() => {
-                dispatch(deleteBucketFB(bucket_index));
-                props.history.goBack();
-            }}>삭제하기</button>
-            <button onClick={() => {
-                dispatch(updateBucketFB(bucket_index));
-                props.history.goBack();
-            }}>완료하기</button>
+            <ButtonGroup>
+                <Button onClick={() => {
+                    dispatch(deleteBucketFB(bucket_index));
+                    props.history.goBack();
+                }}>삭제하기</Button>
+                <Button onClick={() => {
+                    dispatch(updateBucketFB(bucket_index));
+                    props.history.goBack();
+                }}>완료하기</Button>
+            </ButtonGroup>
         </DetailContainer>
     );
 }
