@@ -9,6 +9,7 @@ const middleware = [thunk];
 
 // store에 middleware 저장
 const enhancer = applyMiddleware(...middleware);
+// store의 상태 값(rootReducer)
 const rootReducer = combineReducers({ bucket });
 
 const store = createStore(rootReducer, enhancer);
