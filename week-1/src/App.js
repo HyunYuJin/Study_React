@@ -8,13 +8,15 @@ import Detail from './Detail';
 import NotFound from './NotFound';
 import Progress from './Progress';
 import { connect } from 'react-redux'; // Component와 Redux를 연결해주기 위해 사용
-import { loadBucket, createBucket, loadBucketFB, addBucketFB } from './redux/modules/bucket';
+import { loadBucketFB, addBucketFB } from './redux/modules/bucket';
+import Spinner from './Spinner';
 
 // Redux에 있는 state를 해당 component에 props로 받아오는 역할
 // Store가 가지고 있는 상태 값을 props로 받아오기 위한 함수
-const mapStateToProps = (state) => {
-  return { bucket_list: state.bucket.list };
-}
+const mapStateToProps = (state) => ({
+  bucket_list: state.bucket.list, 
+  is_loaded: state.bucket.is_loaded
+});
 
 // action이 생기는 것을 감시하고 dispatch를 넘겨주는 역할
 // 값을 변화시키기 위한 액션 생성 함수를 props로 받아오기 위한 함수
@@ -55,26 +57,31 @@ class App extends React.Component {
   };
 
   render() {
+    console.log(this.props.is_loaded)
     return (
       <div className="App">
-        <Container>
-          <Title >내 버킷리스트</Title>
-          <Progress />
-          <Line/>
-          {/* props를 넘겨줄 때 render를 쓴다. */}
-          <Switch>
-            <Route exact path="/" render={(props) => <BucketList list={this.props.bucket_list} history={this.props.history} />} />
-            <Route path="/detail/:index" component={Detail} />
-            <Route render={(props) => <NotFound history={this.props.history} />} />
-          </Switch>
-        </Container>
-        <Add>
-          <input type="text" ref={this.text} />
-          <button onClick={this.addBucketList}>추가하기</button>
-        </Add>
-        <button onClick={() => {
-          window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-        }}>위로가기</button>
+        {this.props.is_loaded ? <Spinner /> : (
+          <React.Fragment>
+            <Container>
+              <Title >내 버킷리스트</Title>
+              <Progress />
+              <Line/>
+              {/* props를 넘겨줄 때 render를 쓴다. */}
+              <Switch>
+                <Route exact path="/" render={(props) => <BucketList list={this.props.bucket_list} history={this.props.history} />} />
+                <Route path="/detail/:index" component={Detail} />
+                <Route render={(props) => <NotFound history={this.props.history} />} />
+              </Switch>
+            </Container>
+            <Add>
+              <input type="text" ref={this.text} />
+              <button onClick={this.addBucketList}>추가하기</button>
+            </Add>
+            <button onClick={() => {
+              window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+            }}>위로가기</button>
+          </React.Fragment>
+        )}
       </div>
     )
   }

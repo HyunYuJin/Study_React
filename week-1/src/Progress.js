@@ -5,10 +5,10 @@ import { useSelector } from 'react-redux';
 const Progress = (props) => {
     const bucket_list = useSelector(state => state.bucket.list);
     let count = 0;
-    bucket_list.map((value, index) => {
+    bucket_list.map((value) => {
         if (value.completed) count++;
+        return console.log(count);
     });
-    console.log(bucket_list);
 
     return (
         <ProgressBar>
